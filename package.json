@@ -18,6 +18,7 @@
     "@vue/cli-service": "^3.5.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "stylus-px2rem": "^1.0.14",
     "vue-template-compiler": "^2.5.21"
   }
 }

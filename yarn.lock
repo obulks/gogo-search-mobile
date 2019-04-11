@@ -6527,7 +6527,14 @@ stylus-loader@^3.0.2:
     lodash.clonedeep "^4.5.0"
     when "~3.6.x"
 
-stylus@^0.54.5:
+stylus-px2rem@^1.0.14:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/stylus-px2rem/-/stylus-px2rem-1.0.14.tgz#59858c8405dff2d0ba1ee2d3e66903de0764b0d7"
+  integrity sha1-WYWMhAXf8tC6HuLT5mkD3gdksNc=
+  dependencies:
+    stylus "^0.54.2"
+
+stylus@^0.54.2, stylus@^0.54.5:
   version "0.54.5"
   resolved "http://registry.npm.taobao.org/stylus/download/stylus-0.54.5.tgz?cache=0&other_urls=http%3A%2F%2Fregistry.npm.taobao.org%2Fstylus%2Fdownload%2Fstylus-0.54.5.tgz#42b9560931ca7090ce8515a798ba9e6aa3d6dc79"
   integrity sha1-QrlWCTHKcJDOhRWnmLqeaqPW3Hk=
