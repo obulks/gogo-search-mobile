@@ -3,7 +3,7 @@
     <gogo-logo class="logo"></gogo-logo>
     <gogo-search-bar
       class="search-bar"
-      @search="doSearch"
+      @search="toSearchPage"
     ></gogo-search-bar>
   </div>
 </template>
@@ -25,7 +25,7 @@ export default {
     GogoSearchBar
   },
   methods: {
-    doSearch(searchText) {
+    toSearchPage(searchText) {
       this.searchText = searchText
       this.$router.push({
         path: '/search',

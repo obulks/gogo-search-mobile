@@ -3,7 +3,7 @@
     <input
       class="search-input"
       v-model="searchText"
-      @keydown.enter="doSearch"
+      @keydown.enter="handleSearch"
     >
     <button
       class="search-clear-btn"
@@ -28,7 +28,7 @@ export default {
   name: 'GogoSearchBar',
   data() {
     return {
-      searchText: '',
+      searchText: this.$route.query.text || ''
     }
   },
   methods: {
@@ -42,7 +42,6 @@ export default {
       if (this.searchTextIsNull()) {
         return
       }
-      console.log('click')
       this.clearSearchText()
     },
     handleSearch() {
@@ -51,7 +50,7 @@ export default {
       }
       this.$emit('search', this.searchText)
     }
-  }
+  },
 }
 </script>
 
@@ -60,19 +59,22 @@ export default {
     display: flex
     height: 40px
     margin: 8px
-    border: 1px solid #DFE1E5
     border-radius: 20px
     align-items: center
 
   .search-input
     flex: 1
-    height: 40px
+    height: 38px
     line-height: 40px
-    padding: 0
-    margin-left: 16px
-    border: none
+    padding: 0 0 0 16px
     font-size: 18px
     outline: none
+    border: none
+    border-top: 1px solid #DFE1E5
+    border-bottom: 1px solid #DFE1E5
+    border-left: 1px solid #DFE1E5
+    border-top-left-radius: 20px
+    border-bottom-left-radius: 20px
 
   .search-clear-btn
     width: 40px
@@ -81,6 +83,10 @@ export default {
     font-size: 27px
     outline: none
     color: #757575
+    border: none
+    background: none
+    border-top: 1px solid #DFE1E5
+    border-bottom: 1px solid #DFE1E5
 
   .search-btn
     width: 42px
