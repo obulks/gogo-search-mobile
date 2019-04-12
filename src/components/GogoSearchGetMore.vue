@@ -61,9 +61,9 @@ export default {
 
   .loader
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     .ball-beat > div
       background: #3b78e7
 </style>
