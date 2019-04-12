@@ -5,12 +5,15 @@
       class="search-bar"
       @search="toSearchPage"
     ></gogo-search-bar>
+    <gogo-search-get-more>
+    </gogo-search-get-more>
   </div>
 </template>
 
 <script>
-import GogoLogo from '../components/GogoLogo.vue'
+import GogoLogo from '../components/GogoBaseLogo.vue'
 import GogoSearchBar from '../components/GogoSearchBar.vue'
+import GogoSearchGetMore from '../components/GogoSearchGetMore'
 
 export default {
   name: 'Home',
@@ -22,7 +25,8 @@ export default {
   },
   components: {
     GogoLogo,
-    GogoSearchBar
+    GogoSearchBar,
+    GogoSearchGetMore
   },
   methods: {
     toSearchPage(searchText) {
@@ -30,8 +34,7 @@ export default {
       this.$router.push({
         path: '/search',
         query: {
-          text: this.searchText,
-          page: this.defaultPage
+          text: this.searchText
         }
       })
     }
