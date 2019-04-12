@@ -10,11 +10,11 @@
       :search-text="searchText"
     ></gogo-search-bar>
 
-    <gogo-search-loading
-      class="gogo-search-loading"
-      v-show="loading"
+    <gogo-search-loader
+      class="gogo-search-loader"
+      v-show="searchLoading"
     >
-    </gogo-search-loading>
+    </gogo-search-loader>
     <div
       class="search-result-list"
       v-for="item in searchResults"
@@ -24,7 +24,8 @@
 
     <gogo-search-get-more
       @click.native="getMore"
-      v-show="!loading"
+      v-show="!searchLoading"
+      :show-loader="getMoreLoading"
     >
     </gogo-search-get-more>
   </div>
@@ -33,7 +34,7 @@
 import GogoLogo from '../components/GogoBaseLogo'
 import GogoSearchBar from '../components/GogoSearchBar'
 import GogoSearchItem from '../components/GogoSearchItem'
-import GogoSearchLoading from '../components/GogoSearchLoading'
+import GogoSearchLoader from '../components/GogoSearchLoader'
 import GogoSearchGetMore from '../components/GogoSearchGetMore'
 
 export default {
@@ -44,7 +45,8 @@ export default {
       searchResults: [],
       defaultPage: 1,
       page: 1,
-      loading: false
+      searchLoading: false,
+      getMoreLoading: false
     }
   },
   methods: {
@@ -70,42 +72,53 @@ export default {
         path: '/'
       })
     },
-    onLoading() {
-      this.loading = true
+    onSearchLoading() {
+      this.searchLoading = true
     },
-    offLoading() {
-      this.loading = false
+    offSearchLoading() {
+      this.searchLoading = false
+    },
+    onGetMoreLoading() {
+      this.getMoreLoading = true
+    },
+    offGetMoreLoading() {
+      this.getMoreLoading = false
     },
     doSearch(searchText, page = this.defaultPage) {
       // 每次进行搜索时，把page初始化为 1
       this.page = 1
       this.searchText = searchText
-      this.onLoading()
+      this.onSearchLoading()
       this.setPath(searchText)
       this.getSearchResult({
         searchText,
         page
       })
         .then(res => {
-          this.offLoading()
+          this.offSearchLoading()
           const data = res.data
           this.searchResults = data.entries
         })
         .catch(err => {
-          this.offLoading()
+          this.offSearchLoading()
           console.log(err)
         })
     },
     getMore() {
       // console.log('g')
       this.page++
+      this.onGetMoreLoading()
       this.getSearchResult({
         searchText: this.searchText,
         page: this.page
       })
         .then(res => {
+          this.offGetMoreLoading()
           const data = res.data
           this.searchResults.push(...data.entries)
+        })
+        .catch(err => {
+          this.onGetMoreLoading()
         })
     }
   },
@@ -120,7 +133,7 @@ export default {
     GogoLogo,
     GogoSearchBar,
     GogoSearchItem,
-    GogoSearchLoading,
+    GogoSearchLoader,
     GogoSearchGetMore
   }
 }
@@ -136,7 +149,7 @@ export default {
   .gogo-search-bar
     margin-bottom: 10px
 
-  .gogo-search-loading
+  .gogo-search-loader
     position: fixed
     top: 200px
     left: 50%
