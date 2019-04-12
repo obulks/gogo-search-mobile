@@ -141,7 +141,6 @@ export default {
 
 <style lang="stylus" scoped>
   .gogo-logo
-    width: 130px
     height: 62px
     display: block
     margin: 0 auto
