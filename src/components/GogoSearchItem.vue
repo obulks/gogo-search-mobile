@@ -51,4 +51,5 @@ export default {
       font-size: 14px
       color: #3c4043
       line-height: 20px
+      overflow: hidden
 </style>

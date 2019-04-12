@@ -12,7 +12,7 @@
 
     <gogo-search-loader
       class="gogo-search-loader"
-      v-show="searchLoading"
+      v-show="searchLoaderFlag"
     >
     </gogo-search-loader>
     <div
@@ -22,10 +22,17 @@
       <gogo-search-item :entries="item"/>
     </div>
 
+    <div
+      class="bottom-tips"
+      v-show="bottomTipsFlag"
+    >
+      搜索不到更多内容
+    </div>
+
     <gogo-search-get-more
       @click.native="getMore"
-      v-show="!searchLoading"
-      :show-loader="getMoreLoading"
+      v-show="getMoreFlag"
+      :show-loader="getMoreLoaderFlag"
     >
     </gogo-search-get-more>
   </div>
@@ -43,10 +50,12 @@ export default {
     return {
       searchText: '',
       searchResults: [],
-      defaultPage: 1,
       page: 1,
-      searchLoading: false,
-      getMoreLoading: false
+      defaultPage: 1,
+      searchLoaderFlag: false,
+      getMoreFlag: false,
+      getMoreLoaderFlag: false,
+      bottomTipsFlag: false
     }
   },
   methods: {
@@ -72,53 +81,68 @@ export default {
         path: '/'
       })
     },
-    onSearchLoading() {
-      this.searchLoading = true
+    showSearchLoader() {
+      this.searchLoaderFlag = true
     },
-    offSearchLoading() {
-      this.searchLoading = false
+    hideSearchLoader() {
+      this.searchLoaderFlag = false
     },
-    onGetMoreLoading() {
-      this.getMoreLoading = true
+    showGetMoreLoader() {
+      this.getMoreLoaderFlag = true
     },
-    offGetMoreLoading() {
-      this.getMoreLoading = false
+    hideGetMoreLoader() {
+      this.getMoreLoaderFlag = false
+    },
+    showBottomTips () {
+      this.bottomTipsFlag = true
+    },
+    hideBottomTips () {
+      this.bottomTipsFlag = false
+    },
+    showGetMoreBotton () {
+      this.getMoreFlag = true
+    },
+    hideGetMoreBotton () {
+      this.getMoreFlag = false
     },
     doSearch(searchText, page = this.defaultPage) {
       // 每次进行搜索时，把page初始化为 1
       this.page = 1
       this.searchText = searchText
-      this.onSearchLoading()
+      this.showSearchLoader()
+      this.hideBottomTips()
       this.setPath(searchText)
       this.getSearchResult({
         searchText,
         page
       })
         .then(res => {
-          this.offSearchLoading()
+          this.hideSearchLoader()
+          this.showGetMoreBotton()
           const data = res.data
           this.searchResults = data.entries
         })
         .catch(err => {
-          this.offSearchLoading()
+          this.hideSearchLoader()
           console.log(err)
         })
     },
     getMore() {
-      // console.log('g')
       this.page++
-      this.onGetMoreLoading()
+      this.showGetMoreLoader()
       this.getSearchResult({
         searchText: this.searchText,
         page: this.page
       })
         .then(res => {
-          this.offGetMoreLoading()
+          this.hideGetMoreLoader()
           const data = res.data
           this.searchResults.push(...data.entries)
         })
         .catch(err => {
-          this.onGetMoreLoading()
+          this.showBottomTips()
+          this.hideGetMoreLoader()
+          this.hideGetMoreBotton()
         })
     }
   },
@@ -152,5 +176,9 @@ export default {
     position: fixed
     top: 200px
     left: 50%
+  .bottom-tips
+    margin: 20px 0
+    font-size: 14px
+    text-align: center
 
 </style>
