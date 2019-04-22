@@ -44,6 +44,8 @@ import GogoSearchItem from '../components/GogoSearchItem'
 import GogoSearchLoader from '../components/GogoSearchLoader'
 import GogoSearchGetMore from '../components/GogoSearchGetMore'
 
+import debounce from 'lodash/debounce'
+
 export default {
   name: 'Search',
   data() {
@@ -93,41 +95,44 @@ export default {
     hideGetMoreLoader() {
       this.getMoreLoaderFlag = false
     },
-    showBottomTips () {
+    showBottomTips() {
       this.bottomTipsFlag = true
     },
-    hideBottomTips () {
+    hideBottomTips() {
       this.bottomTipsFlag = false
     },
-    showGetMoreBotton () {
+    showGetMoreBotton() {
       this.getMoreFlag = true
     },
-    hideGetMoreBotton () {
+    hideGetMoreBotton() {
       this.getMoreFlag = false
     },
-    doSearch(searchText, page = this.defaultPage) {
-      // 每次进行搜索时，把page初始化为 1
-      this.page = 1
-      this.searchText = searchText
-      this.showSearchLoader()
-      this.hideBottomTips()
-      this.setPath(searchText)
-      this.getSearchResult({
-        searchText,
-        page
-      })
-        .then(res => {
-          this.hideSearchLoader()
-          this.showGetMoreBotton()
-          const data = res.data
-          this.searchResults = data.entries
+    doSearch: debounce(function (searchText, page = this.defaultPage) {
+        this.page = 1
+        this.searchText = searchText
+        this.showSearchLoader()
+        this.hideBottomTips()
+        this.setPath(searchText)
+        this.getSearchResult({
+          searchText,
+          page
         })
-        .catch(err => {
-          this.hideSearchLoader()
-          console.log(err)
-        })
-    },
-    getMore() {
+          .then(res => {
+            this.hideSearchLoader()
+            this.showGetMoreBotton()
+            const data = res.data
+            this.searchResults = data.entries
+          })
+          .catch(err => {
+            this.hideSearchLoader()
+            console.log(err)
+          })
+      }, 500, {
+        leading: true,
+        trailing: false
+      }
+    ),
+    getMore: debounce(function () {
       this.page++
       this.showGetMoreLoader()
       this.getSearchResult({
@@ -144,7 +149,11 @@ export default {
           this.hideGetMoreLoader()
           this.hideGetMoreBotton()
         })
-    }
+
+    }, 500, {
+      leading: true,
+      trailing: false
+    }),
   },
   mounted() {
     if (this.$route.query.text === undefined) {
@@ -152,7 +161,8 @@ export default {
     }
     this.searchText = this.$route.query.text
     this.doSearch(this.searchText)
-  },
+  }
+  ,
   components: {
     GogoLogo,
     GogoSearchBar,
@@ -176,6 +186,7 @@ export default {
     position: fixed
     top: 200px
     left: 50%
+
   .bottom-tips
     margin: 20px 0
     font-size: 14px

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    #container {
+      width: 100%;
+      height: 200px;
+      line-height: 200px;
+      text-align: center;
+      color: #fff;
+      background-color: #666;
+      font-size: 40px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="container"></div>
+
+<script src="../node_modules/lodash/lodash.min.js"></script>
+<script>
+let count = 1
+const container = document.getElementById('container')
+
+const getUserAction = function () {
+  container.innerText = count++
+  console.log(this)
+}
+
+container.onclick = _.debounce(getUserAction, 500, {
+  leading: true
+})
+
+</script>
+</body>
+</html>
