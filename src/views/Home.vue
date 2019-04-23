@@ -5,6 +5,15 @@
       class="search-bar"
       @search="toSearchPage"
     ></gogo-search-bar>
+
+    <div class="author">
+      <p>
+        欢迎给提供API的作者<a href="https://github.com/zenuo/gogo">🌟</a>
+      </p>
+      <p>
+        或者给本项目<a href="https://github.com/obulks/gogo-mobile-search">🌟</a>
+      </p>
+    </div>
   </div>
 </template>
 
@@ -43,4 +52,13 @@ export default {
   .logo
     display: block
     margin: 80px auto 20px auto
+  .author
+    margin-top: 30px
+    text-align: center
+    p
+      font-size: 16px
+      line-height: 1.5
+      a
+        -webkit-tap-highlight-color: transparent;
+
 </style>
