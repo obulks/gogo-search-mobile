@@ -7,7 +7,7 @@
     >
     <button
       class="search-clear-btn"
-      @click="clearBtnClick"
+      @click="handleClear"
       v-show="!(searchTextIsNull())"
     >
       ×
@@ -38,7 +38,7 @@ export default {
     searchTextIsNull() {
       return this.searchText === ''
     },
-    clearBtnClick() {
+    handleClear() {
       if (this.searchTextIsNull()) {
         return
       }

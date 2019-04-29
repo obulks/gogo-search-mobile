@@ -3,38 +3,40 @@
     <gogo-logo
       class="gogo-logo"
       @click.native="toHome"
-    ></gogo-logo>
+    />
+
     <gogo-search-bar
       class="gogo-search-bar"
       @search="doSearch"
       :search-text="searchText"
-    ></gogo-search-bar>
+    />
+
+    <div class="search-result-list-wrapper">
+      <gogo-search-item
+        v-for="item in searchResults"
+        :entries="item"
+      />
+    </div>
 
     <gogo-search-loader
       class="gogo-search-loader"
       v-show="searchLoaderFlag"
-    >
-    </gogo-search-loader>
-    <div
-      class="search-result-list"
-      v-for="item in searchResults"
-    >
-      <gogo-search-item :entries="item"/>
-    </div>
+    />
 
     <div
-      class="bottom-tips"
-      v-show="bottomTipsFlag"
+      class="tips"
+      v-show="tipsFlag"
     >
-      搜索不到更多内容
+      {{tipsMessage}}
     </div>
+
+    <gogo-scroll-top/>
 
     <gogo-search-get-more
       @click.native="getMore"
       v-show="getMoreFlag"
       :show-loader="getMoreLoaderFlag"
-    >
-    </gogo-search-get-more>
+    />
   </div>
 </template>
 <script>
@@ -43,6 +45,7 @@ import GogoSearchBar from '../components/GogoSearchBar'
 import GogoSearchItem from '../components/GogoSearchItem'
 import GogoSearchLoader from '../components/GogoSearchLoader'
 import GogoSearchGetMore from '../components/GogoSearchGetMore'
+import GogoScrollTop from '../components/GogoBaseScrollTop.vue'
 
 import debounce from 'lodash/debounce'
 
@@ -57,7 +60,8 @@ export default {
       searchLoaderFlag: false,
       getMoreFlag: false,
       getMoreLoaderFlag: false,
-      bottomTipsFlag: false
+      tipsMessage: '',
+      tipsFlag: false
     }
   },
   methods: {
@@ -95,11 +99,14 @@ export default {
     hideGetMoreLoader() {
       this.getMoreLoaderFlag = false
     },
-    showBottomTips() {
-      this.bottomTipsFlag = true
+    showTips() {
+      this.tipsFlag = true
     },
-    hideBottomTips() {
-      this.bottomTipsFlag = false
+    hideTips() {
+      this.tipsFlag = false
+    },
+    changeTipsMessage(text) {
+      this.tipsMessage = text
     },
     showGetMoreBotton() {
       this.getMoreFlag = true
@@ -111,7 +118,7 @@ export default {
         this.page = 1
         this.searchText = searchText
         this.showSearchLoader()
-        this.hideBottomTips()
+        this.hideTips()
         this.setPath(searchText)
         this.getSearchResult({
           searchText,
@@ -125,7 +132,8 @@ export default {
           })
           .catch(err => {
             this.hideSearchLoader()
-            console.log(err)
+            this.changeTipsMessage('无法搜索到相关内容')
+            this.showTips()
           })
       }, 500, {
         leading: true,
@@ -145,7 +153,8 @@ export default {
           this.searchResults.push(...data.entries)
         })
         .catch(err => {
-          this.showBottomTips()
+          this.changeTipsMessage('搜索不到更多内容')
+          this.showTips()
           this.hideGetMoreLoader()
           this.hideGetMoreBotton()
         })
@@ -161,14 +170,14 @@ export default {
     }
     this.searchText = this.$route.query.text
     this.doSearch(this.searchText)
-  }
-  ,
+  },
   components: {
     GogoLogo,
+    GogoScrollTop,
     GogoSearchBar,
     GogoSearchItem,
     GogoSearchLoader,
-    GogoSearchGetMore
+    GogoSearchGetMore,
   }
 }
 </script>
@@ -187,7 +196,7 @@ export default {
     top: 200px
     left: 50%
 
-  .bottom-tips
+  .tips
     margin: 20px 0
     font-size: 14px
     text-align: center
