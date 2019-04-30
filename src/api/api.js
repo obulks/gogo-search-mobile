@@ -1,7 +1,9 @@
 import axios from 'axios'
 
+let baseUrl = 'https://176.122.157.73:5000/api'
+
 const getSearchResult = function (params) {
-  let url = 'https://176.122.157.73:5000/api/search'
+  let url = baseUrl + '/search'
   return axios.get(url, {
     params: {
       q: params.searchText,
@@ -9,6 +11,7 @@ const getSearchResult = function (params) {
     }
   })
 }
+
 export {
   getSearchResult
 }

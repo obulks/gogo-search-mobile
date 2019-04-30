@@ -48,6 +48,7 @@ import GogoSearchGetMore from '../components/GogoSearchGetMore'
 import GogoScrollTop from '../components/GogoBaseScrollTop.vue'
 
 import debounce from 'lodash/debounce'
+import {getSearchResult} from '../api/api'
 
 export default {
   name: 'Search',
@@ -65,15 +66,6 @@ export default {
     }
   },
   methods: {
-    getSearchResult(params) {
-      let url = 'https://176.122.157.73:5000/api/search'
-      return this.axios.get(url, {
-        params: {
-          q: params.searchText,
-          p: params.page
-        }
-      })
-    },
     setPath(searchText) {
       this.$router.push({
         path: '/search',
@@ -120,7 +112,7 @@ export default {
         this.showSearchLoader()
         this.hideTips()
         this.setPath(searchText)
-        this.getSearchResult({
+        getSearchResult({
           searchText,
           page
         })
@@ -143,7 +135,7 @@ export default {
     getMore: debounce(function () {
       this.page++
       this.showGetMoreLoader()
-      this.getSearchResult({
+      getSearchResult({
         searchText: this.searchText,
         page: this.page
       })

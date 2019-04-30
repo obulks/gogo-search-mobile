@@ -27,7 +27,6 @@ export default {
   data() {
     return {
       toTopFlag: false,
-      scrollTop: 0
     }
   },
   methods: {
@@ -47,7 +46,6 @@ export default {
       let before = this.getScrollTop()
       let that = this
       window.addEventListener('scroll', function () {
-        console.log('判断方向')
         let after = that.getScrollTop()
         let delta = after - before;
         if (delta === 0) {
@@ -61,14 +59,14 @@ export default {
       })
     },
     handleScroll: throttle(function () {
-      this.scrollTop = this.getScrollTop()
       // 滚动时显示和隐藏的临界值
       let sign = 120
-      if (this.scrollTop < sign) {
+      let currentScrollTop = this.getScrollTop()
+      if (currentScrollTop < sign) {
         this.hideToTop()
       } else {
         this.scrollDirection((direction) => {
-          if (direction === 'up' && this.scrollTop > sign) {
+          if (direction === 'up' && currentScrollTop > sign) {
             this.showToTop()
           } else {
             this.hideToTop()
@@ -81,9 +79,16 @@ export default {
       trailing: true
     }),
     scrollToTop() {
-      let dom = document.documentElement
+      let dom
+      // 兼容不同浏览器
+      let testScroll = document.documentElement.scrollTop
+      if(!testScroll) {
+        dom = document.body
+      } else {
+        dom = document.documentElement
+      }
       let that = this
-      let scrollTop = this.scrollTop
+      let scrollTop = this.getScrollTop()
       let timer = null;
       cancelAnimationFrame(timer)
       timer = requestAnimationFrame(function fn() {
