@@ -66,4 +66,6 @@ export default {
     transform: translate(-50%, -50%);
     .ball-beat > div
       background: #3b78e7
+      width: 12px
+      height: 12px
 </style>
