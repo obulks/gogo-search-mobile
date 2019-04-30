@@ -1,20 +1,27 @@
 <template>
   <div
     class="scroll-top-wrapper"
-    v-show="toTopFlag"
   >
-    <button @click="scrollToTop">
+    <transition name="scale">
+      <button
+        @click="scrollToTop"
+        v-show="toTopFlag"
+      >
       <span class="icon">
         <svg class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="200"
              height="200"><path
           d="M640 608c-6.4 0-19.2 0-25.6-6.4L512 492.8 409.6 601.6c-12.8 12.8-32 12.8-44.8 0s-12.8-32 0-44.8l128-128c12.8-12.8 32-12.8 44.8 0l128 128c12.8 12.8 12.8 32 0 44.8C659.2 608 646.4 608 640 608z"
           p-id="2896"></path></svg>
       </span>
-    </button>
+      </button>
+    </transition>
   </div>
 </template>
 
 <script>
+import debounce from 'lodash/debounce'
+import throttle from 'lodash/throttle'
+
 export default {
   name: 'GogoBaseScrollTop',
   data() {
@@ -36,16 +43,43 @@ export default {
         document.body.scrollTop ||
         0
     },
-    handleScroll() {
-      this.scrollTop = this.getScrollTop()
-      this.scrollDirection((direction) => {
-        if (direction === 'up' && this.scrollTop > 120) {
-          this.showToTop()
-        } else {
-          this.hideToTop()
+    scrollDirection(cb) {
+      let before = this.getScrollTop()
+      let that = this
+      window.addEventListener('scroll', function () {
+        console.log('判断方向')
+        let after = that.getScrollTop()
+        let delta = after - before;
+        if (delta === 0) {
+          return false
         }
+        cb(delta > 0 ? 'down' : 'up')
+        before = after
+      }, {
+        // scroll事件只调用一次，在调用后自动移除
+        once: true
       })
     },
+    handleScroll: throttle(function () {
+      this.scrollTop = this.getScrollTop()
+      // 滚动时显示和隐藏的临界值
+      let sign = 120
+      if (this.scrollTop < sign) {
+        this.hideToTop()
+      } else {
+        this.scrollDirection((direction) => {
+          if (direction === 'up' && this.scrollTop > sign) {
+            this.showToTop()
+          } else {
+            this.hideToTop()
+          }
+        })
+      }
+    }, 300, {
+      leading: true,
+      // 在超时后还能继续调用
+      trailing: true
+    }),
     scrollToTop() {
       let dom = document.documentElement
       let that = this
@@ -79,23 +113,9 @@ export default {
         }
       })
     },
-    scrollDirection(cb) {
-      let before = this.getScrollTop()
-      let that = this
-      window.addEventListener('scroll', function () {
-        let after = that.getScrollTop()
-        let delta = after - before;
-        if (delta === 0) {
-          return false
-        }
-        cb(delta > 0 ? 'down' : 'up')
-        before = after
-      })
-    }
   },
   mounted() {
     window.addEventListener('scroll', this.handleScroll)
-    // window.addEventListener('scroll', this.scrollDirection)
   },
   destroyed() {
     window.addEventListener('scroll', this.handleScroll)
@@ -105,10 +125,25 @@ export default {
 
 <style lang="stylus" scoped>
 
+  // 显示和隐藏时的过渡动画
+  .scale-enter, .scale-leave-to {
+    transform: scale(0)
+  }
+
+  .scale-leave, .scale-enter-to {
+    transform: scale(1)
+  }
+
+  .scale-enter-active, .scale-leave-active {
+    transition: all .2s
+  }
+
   .scroll-top-wrapper
     position: fixed
     bottom: 80px
     right: 15px
+    width: 44px
+    height: 44px
     z-index: 100
 
   button
@@ -117,9 +152,9 @@ export default {
     padding: 0
     margin: 0
     background-color: #fff
-    border: 1px solid #dadada
+    border: 1px solid #fff
     border-radius: 50%
-    box-shadow: 0 0 2px rgba(32, 33, 36, 0.28)
+    box-shadow: 0 0 2px #666
 
     &:focus
       outline: none
