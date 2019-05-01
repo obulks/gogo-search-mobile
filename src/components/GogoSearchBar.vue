@@ -65,7 +65,7 @@ export default {
   .search-input
     flex: 1
     height: 38px
-    line-height: 40px
+    line-height: 38px
     padding: 0 0 0 16px
     font-size: 18px
     outline: none
@@ -77,16 +77,16 @@ export default {
     border-bottom-left-radius: 20px
 
   .search-clear-btn
-    width: 40px
-    height: 40px
+    position: absolute
+    right: 56px
+    width: 30px
+    height: 30px
     padding: 0
     font-size: 27px
     outline: none
     color: #757575
     border: none
     background: none
-    border-top: 1px solid #DFE1E5
-    border-bottom: 1px solid #DFE1E5
 
   .search-btn
     width: 42px
