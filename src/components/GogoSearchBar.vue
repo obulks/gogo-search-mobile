@@ -10,7 +10,7 @@
       @click="handleClear"
       v-show="!(searchTextIsNull())"
     >
-      ×
+      <span class="clear-icon">×</span>
     </button>
     <button class="search-btn"
             @click="handleSearch"
@@ -78,15 +78,17 @@ export default {
 
   .search-clear-btn
     position: absolute
-    right: 56px
+    right: 50px
     width: 30px
-    height: 30px
+    height: 40px
     padding: 0
-    font-size: 27px
+    margin: 0
     outline: none
-    color: #757575
     border: none
     background: none
+    .clear-icon
+      font-size: 27px
+      color: #757575
 
   .search-btn
     width: 42px
