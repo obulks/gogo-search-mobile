@@ -1,6 +1,5 @@
 import axios from 'axios'
-
-let baseUrl = 'https://176.122.157.73:5000/api'
+import baseUrl from './baseUrl.js'
 
 const getSearchResult = function (params) {
   let url = baseUrl + '/search'
@@ -11,7 +10,6 @@ const getSearchResult = function (params) {
     }
   })
 }
-
 export {
   getSearchResult
 }
