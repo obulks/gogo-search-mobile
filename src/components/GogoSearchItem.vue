@@ -25,13 +25,17 @@ export default {
     margin: 0 8px 10px 8px
     box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28)
     border-radius: 8px
+    background-color: #fff
+
   .item-header
     display: block
     padding: 12px 16px
+
     .title
       font-size: 16px
       color: #1967d2
       line-height: 20px
+
     .url
       overflow: hidden
       text-overflow: ellipsis
@@ -47,6 +51,7 @@ export default {
 
   .item-body
     padding: 12px 16px
+
     .desc
       font-size: 14px
       color: #3c4043

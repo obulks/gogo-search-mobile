@@ -32,6 +32,7 @@ export default {
     position: relative
     margin: 16px
     height: 40px
+    background-color: #fff
 
     .get-more-button
       position: relative

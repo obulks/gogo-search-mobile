@@ -49,6 +49,10 @@ export default {
 
 <style lang="stylus" scoped>
   @import "../common/styl/px2rem.styl"
+  
+  .home
+    background-color: #fff
+  
   .logo
     display: block
     margin: 80px auto 20px auto

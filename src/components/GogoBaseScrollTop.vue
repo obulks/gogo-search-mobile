@@ -150,6 +150,7 @@ export default {
     width: 44px
     height: 44px
     z-index: 100
+    background-color: #fff
 
   button
     width: 44px

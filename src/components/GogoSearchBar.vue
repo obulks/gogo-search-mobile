@@ -61,6 +61,7 @@ export default {
     margin: 8px
     border-radius: 20px
     align-items: center
+    background-color: #fff
 
   .search-input
     flex: 1
