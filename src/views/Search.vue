@@ -175,6 +175,8 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+  .search
+    background-color: #fff
   .gogo-logo
     height: 62px
     display: block
