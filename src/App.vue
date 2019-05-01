@@ -4,9 +4,10 @@
   </div>
 </template>
 
-<style lang="stylus" scoped>
-  body
+<style lang="stylus">
+  html, body
     background-color: #fff
+
   #app
     background-color: #fff
 </style>
