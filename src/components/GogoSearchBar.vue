@@ -79,7 +79,7 @@ export default {
   .search-clear-btn
     position: absolute
     right: 50px
-    width: 30px
+    width: 40px
     height: 40px
     padding: 0
     margin: 0
