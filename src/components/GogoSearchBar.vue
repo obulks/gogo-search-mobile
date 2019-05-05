@@ -67,7 +67,8 @@ export default {
     flex: 1
     height: 38px
     line-height: 38px
-    padding: 0 0 0 16px
+    padding-left: 16px
+    padding-right: 36px
     font-size: 18px
     outline: none
     border: none
@@ -80,14 +81,14 @@ export default {
   .search-clear-btn
     position: absolute
     right: 50px
-    width: 40px
-    height: 40px
     padding: 0
-    margin: 0
+    margin: 0 10px
     outline: none
     border: none
     background: none
     .clear-icon
+      display: inline-block
+      width: 16px
       font-size: 27px
       color: #757575
 
