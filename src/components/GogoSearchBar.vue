@@ -67,8 +67,7 @@ export default {
     flex: 1
     height: 38px
     line-height: 38px
-    padding-left: 16px
-    padding-right: 36px
+    padding: 0 36px 0 16px
     font-size: 18px
     outline: none
     border: none
