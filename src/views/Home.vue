@@ -23,7 +23,7 @@ import GogoSearchBar from '../components/GogoSearchBar.vue'
 
 export default {
   name: 'Home',
-  data () {
+  data() {
     return {
       searchText: '',
       defaultPage: 1
@@ -47,18 +47,22 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped> 
+<style lang="stylus" scoped>
   .home
     background-color: #fff
+
   .logo
     display: block
     margin: 80px auto 20px auto
+
   .author
     margin-top: 30px
     text-align: center
+
     p
       font-size: 16px
       line-height: 1.5
+
       a
         -webkit-tap-highlight-color: transparent;
 

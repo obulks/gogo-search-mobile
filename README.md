@@ -1,6 +1,6 @@
 # gogo-mobile-search
 
-*服务已失效*
+*可正常访问*
 
 使用[zenuo/gogo](https://github.com/zenuo/gogo)提供的API
 

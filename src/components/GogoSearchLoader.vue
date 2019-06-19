@@ -19,7 +19,6 @@ export default {
 <style lang="stylus" scoped>
   @import '../../node_modules/loaders.css/loaders.min.css'
   .search-loader-wrapper
-
   .ball-triangle-path > div {
     background-color: #3b78e7
   }

@@ -82,7 +82,7 @@ export default {
       let dom
       // 兼容不同浏览器
       let testScroll = document.documentElement.scrollTop
-      if(!testScroll) {
+      if (!testScroll) {
         dom = document.body
       } else {
         dom = document.documentElement
