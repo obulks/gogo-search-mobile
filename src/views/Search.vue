@@ -100,10 +100,10 @@ export default {
     changeTipsMessage(text) {
       this.tipsMessage = text
     },
-    showGetMoreBotton() {
+    showGetMoreButton() {
       this.getMoreFlag = true
     },
-    hideGetMoreBotton() {
+    hideGetMoreButton() {
       this.getMoreFlag = false
     },
     doSearch: debounce(function (searchText, page = this.defaultPage) {
@@ -118,7 +118,7 @@ export default {
         })
           .then(res => {
             this.hideSearchLoader()
-            this.showGetMoreBotton()
+            this.showGetMoreButton()
             const data = res.data
             this.searchResults = data.entries
           })
@@ -148,7 +148,7 @@ export default {
           this.changeTipsMessage('搜索不到更多内容')
           this.showTips()
           this.hideGetMoreLoader()
-          this.hideGetMoreBotton()
+          this.hideGetMoreButton()
         })
 
     }, 500, {
