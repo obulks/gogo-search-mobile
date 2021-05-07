@@ -1,4 +1,4 @@
-# gogo-mobile-search
+# gogo-search-mobile
 
 *可正常访问*
 
